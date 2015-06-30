@@ -28,7 +28,7 @@ var BING_API_KEY = '9XRXbONaSXn/TJ8YDbdpf3mZUB0B2rm7SdpPBEzq0yE';
 var googleMap; // declares a global map variable.
 var BING_NEWS_QUERY = 'https://api.datamarket.azure.com/Bing/Search/v1/News';
 var EMBEDLY_API_KEY = 'd347b17304734ba1b66461039c7d34d1';
-var NEWS_SEARCH_PAGES = 15; //number of pages for bing search (one AJAX call per page) , each page has 15 news.
+var NEWS_SEARCH_PAGES = 1; //number of pages for bing search (one AJAX call per page) , each page has 15 news.
 var BING_NEWS_MARKETS = { //Used to get specific market information for each supported country in bing news search query.
 	AU: 'en-AU',
 	CA: 'en-CA',
@@ -488,6 +488,7 @@ ko.bindingHandlers.mapMarker = {
 				title: news.title
 			});
 			news._mapMarker = marker;
+			self.currentInfoWindow = null;
 			// I need that in case of element removal. (IE a news element is deleted from the news array).
 			ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
 				var modelObj = ko.dataFor(element);
@@ -508,11 +509,18 @@ ko.bindingHandlers.mapMarker = {
 					maxWidth: 250
 				});
 			}, self);
-			// Open / close info window on click.
-			clickEvnt.subscribe(function() {
-				if (news._infoWindow().getMap()) news._infoWindow().close();
-				else news._infoWindow().open(allBindingsAccessor().map, news._mapMarker);
-			}, self);
+			function showHideIfoWindow(){
+				if (!self.currentInfoWindow) self.currentInfoWindow = news._infoWindow(); //Initialize current info wondow if null.
+				if(self.currentInfoWindow != news._infoWindow()) {
+					self.currentInfoWindow.close();
+					self.currentInfoWindow = news._infoWindow();
+				}
+				if (self.currentInfoWindow.getMap()) self.currentInfoWindow.close();
+				else {
+					self.currentInfoWindow.open(allBindingsAccessor().map, news._mapMarker);}
+			}
+			// Open / close info window on click. news._infoWindow()
+			clickEvnt.subscribe(showHideIfoWindow, self);
 			// Hide / show info window when visible.
 			visibleEvnt.subscribe(function() {
 				news._mapMarker.setMap(news.visible() ? allBindingsAccessor().map : null);
@@ -531,10 +539,8 @@ ko.bindingHandlers.mapMarker = {
 				selecEvnt(false);
 			});
 			//  Hide / show info window when a marker is clicked.
-			google.maps.event.addListener(marker, 'click', function() {
-				if (news._infoWindow().getMap()) news._infoWindow().close();
-				else news._infoWindow().open(allBindingsAccessor().map, marker);
-			});
+			google.maps.event.addListener(marker, 'click', showHideIfoWindow);
+
 		} catch (err) {
 			console.log(err);
 		}
