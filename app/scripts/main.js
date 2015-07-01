@@ -95,13 +95,11 @@ function initialize() {
 	};
 	$(document).ready(resizeFn);
 	window.addEventListener('resize', resizeFn);
-
-Offline.options = {checks: {image: {url: 'images/my-image.gif'}, active: 'image'}}
-	var run = function(){
- if (Offline.state === 'up')
- Offline.check();
- }
- setInterval(run, 5000);
+	var run = function() {
+		if (Offline.state === 'up')
+			Offline.check();
+	}
+	setInterval(run, 5000);
 
 }
 
@@ -183,7 +181,7 @@ function getNews(cityObj, newsOsvArr, NewsClass) {
 
 		var street;
 		var streetKey;
-		for (var i = 0 , len = response.d.results.length; i < len ; i++) {
+		for (var i = 0, len = response.d.results.length; i < len; i++) {
 			street = hasStreet(response.d.results[i].Description);
 			if (street) {
 				streetKey = street.replace(' ', '').toLowerCase();
@@ -336,7 +334,7 @@ function localNewsViewModel() {
 		var countryCode;
 		var curLoc = self.currentLocation();
 		var adressComp = curLoc.address_components;
-		for (var i = 0 , len = adressComp.length; i <len; i++) {
+		for (var i = 0, len = adressComp.length; i < len; i++) {
 			if (adressComp[i].types.indexOf('country') != -1) countryCode = adressComp[i].short_name;
 		}
 		var cit = new City(curLoc.vicinity, curLoc.formatted_address, countryCode, new Coordinate(curLoc.geometry.location.A, curLoc.geometry.location.F));
@@ -350,7 +348,7 @@ function localNewsViewModel() {
 	 */
 	self.visibleNewsCounter = function() {
 		var count = 0;
-		for (var i = 0 , len = self.currentNews().length; i < len; i++) {
+		for (var i = 0, len = self.currentNews().length; i < len; i++) {
 			if (self.currentNews()[i].visible()) count++;
 		}
 		self.visibleNewsCount(count);
@@ -383,14 +381,14 @@ function localNewsViewModel() {
 	};
 
 	self.showAll = function() {
-		for (var i = 0 , len = self.currentNews().length; i < len; i++) {
+		for (var i = 0, len = self.currentNews().length; i < len; i++) {
 			self.currentNews()[i].visible(true);
 		}
 
 	};
 
 	self.hideAll = function() {
-		for (var i = 0 , len = self.currentNews().length; i < len; i++) {
+		for (var i = 0, len = self.currentNews().length; i < len; i++) {
 			self.currentNews()[i].visible(false);
 		}
 
@@ -516,15 +514,17 @@ ko.bindingHandlers.mapMarker = {
 					maxWidth: 250
 				});
 			}, self);
-			function showHideIfoWindow(){
+
+			function showHideIfoWindow() {
 				if (!self.currentInfoWindow) self.currentInfoWindow = news._infoWindow(); //Initialize current info wondow if null.
-				if(self.currentInfoWindow != news._infoWindow()) {
+				if (self.currentInfoWindow != news._infoWindow()) {
 					self.currentInfoWindow.close();
 					self.currentInfoWindow = news._infoWindow();
 				}
 				if (self.currentInfoWindow.getMap()) self.currentInfoWindow.close();
 				else {
-					self.currentInfoWindow.open(allBindingsAccessor().map, news._mapMarker);}
+					self.currentInfoWindow.open(allBindingsAccessor().map, news._mapMarker);
+				}
 			}
 			// Open / close info window on click. news._infoWindow()
 			clickEvnt.subscribe(showHideIfoWindow, self);
