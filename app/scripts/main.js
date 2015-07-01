@@ -96,6 +96,13 @@ function initialize() {
 	$(document).ready(resizeFn);
 	window.addEventListener('resize', resizeFn);
 
+Offline.options = {checks: {image: {url: 'images/my-image.gif'}, active: 'image'}}
+	var run = function(){
+ if (Offline.state === 'up')
+ Offline.check();
+ }
+ setInterval(run, 5000);
+
 }
 
 /**
