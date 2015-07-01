@@ -28,7 +28,7 @@ var BING_API_KEY = '9XRXbONaSXn/TJ8YDbdpf3mZUB0B2rm7SdpPBEzq0yE';
 var googleMap; // declares a global map variable.
 var BING_NEWS_QUERY = 'https://api.datamarket.azure.com/Bing/Search/v1/News';
 var EMBEDLY_API_KEY = 'd347b17304734ba1b66461039c7d34d1';
-var NEWS_SEARCH_PAGES = 1; //number of pages for bing search (one AJAX call per page) , each page has 15 news.
+var NEWS_SEARCH_PAGES = 15; //number of pages for bing search (one AJAX call per page) , each page has 15 news.
 var BING_NEWS_MARKETS = { //Used to get specific market information for each supported country in bing news search query.
 	AU: 'en-AU',
 	CA: 'en-CA',
