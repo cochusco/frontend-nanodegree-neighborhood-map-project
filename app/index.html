@@ -8,12 +8,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/offline-theme-chrome.css" >
-    <link rel="stylesheet" href="styles//offline-language-english.css" >
+    <link rel="stylesheet" href="styles/offline-language-english.css" >
+    <link rel="stylesheet" href="styles/sidebar.css" >
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
     <script src="scripts/Offline.min.js"></script>
     <script src="scripts/main.js"></script>
+    <script src="scripts/sidebar.js"></script>
   </head>
   <body>
     <!-- Nav bar -->
@@ -21,6 +23,10 @@
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
+          <button type="button" class="navbar-toggle hidden-lg pull-left nav-sidebar-button collapsed" data-toggle="sidebar" data-target=".sidebar">
+            <span class="sr-only" >Sidebar</span>
+            <span class="glyphicon glyphicon-th-list" aria-hidden="true" ></span>
+          </button>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -35,7 +41,7 @@
             </li>
           </ul>
           <form class="navbar-form navbar-left" role="search">
-          <div class="form-group">
+            <div class="form-group">
               <button data-bind="click: showAll" class="btn default">show<span class="glyphicon  glyphicon-eye-open" aria-hidden="true" ></span></button>
               <button type="button" class="btn default" data-bind="click: sortByDate">date <span class="glyphicon  glyphicon-sort" aria-hidden="true" ></span> </button>
               <input type="text" class="form-control" placeholder="Insert city..." data-bind="addressAutocomplete:, types: ['(cities)'] , output: currentLocation">
@@ -51,7 +57,7 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-3 no-padding"> <!--News list-->
+        <div class="col-lg-3 no-padding sidebar sidebar-left sidebar-animate sidebar-lg-show"> <!--News list-->
           <div class="hidden-scrollbar"> <!-- These div containers are used to scroll without scrollbar (scrollbar is overlapped)-->
             <div class="inner-scrollbar">
               <div data-bind="foreach: currentNews" class="newsforeach" >
@@ -62,7 +68,7 @@
                   </div>
                   <div class="media-body">
                     <h4 class="media-heading" data-bind="text: title , clickBubble: false"><a href="#"  data-bind="attr: {href : url}, click:  function() {return true;}, clickBubble: false"></a></h4>
-                    <div class="row"><div class="col-md-12"><a href="#"  data-bind="attr: {href : url}, click:  function() {return true;}, clickBubble: false"  class="pull-right"> <span data-bind="text: source"></span></a></div></div>
+                    <div class="row"><div class="col-lg-12"><a href="#"  data-bind="attr: {href : url}, click:  function() {return true;}, clickBubble: false"  class="pull-right"> <span data-bind="text: source"></span></a></div></div>
                     <div class="btn-groupt" role="group" aria-label="...">
                       <button type="button" class="btn btn-default btn-xs" data-bind="click: $parent.deleteNew , clickBubble: false">
                         <span class="glyphicon  glyphicon-trash" aria-hidden="true" ></span> Delete </button>
@@ -78,7 +84,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-9 no-padding"><!--Map container colum-->
+            <div class="col-lg-9 no-padding col-lg-offset-3"><!--Map container colum-->
               <div id="map-canvas"></div>
               <div data-bind="mapForeach : currentNews , map: googleMap , place: currentCity , map_div_id: 'map-canvas'">  <!--'Knockout binding 'map 'virtual container' (map will be painted in map-canvas div). -->
                 <div data-bind="mapMarker , map: googleMap , news: $data , clickEvntOsv: $data.clicked, selecEvnObsv:  $data.isSelected , visibleEvntOsv:  $data.visible"> </div>  <!--'Knockout binding' markers (markers will be painted in map parameter).-->
@@ -102,8 +108,8 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               </div>
             </div>
-          </div
+          </div>
         </div>
-        <<script>window.onload = function(){initialize();}</script>
-      </body>a
+        <script>window.onload = function(){initialize();}</script>
+      </body>
       </html>
