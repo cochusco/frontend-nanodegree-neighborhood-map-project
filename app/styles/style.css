@@ -1,55 +1,55 @@
 
-.newsforeach {
-	  margin-top: 15px;
+  .newsforeach {
+    margin-top: 15px;
     margin-right: 25px;
-}
+  }
 
-.navbar-default {
-	margin-bottom: 0px;
-}
+  .navbar-default {
+    margin-bottom: 0;
+  }
 
-.badge-info {
-  background-color: #269abc;
-}
+  .badge-info {
+    background-color: #269abc;
+  }
 
-.media:hover {
+  .media:hover {
     color: #269abc;
-}
+  }
 
-.selectedNew {
-	 color: #269abc;
-}
+  .selectedNew {
+    color: #269abc;
+  }
 
-.no-padding {
-    padding-left: 0px;
-    padding-right: 0px;
-}
+  .no-padding {
+    padding-left: 0;
+    padding-right: 0;
+  }
 
-.thumbnail-news {
-  width: 64px;
-}
+  .thumbnail-news {
+    width: 64px;
+  }
 
-/**
- * Those classes hidden-scrollbar inner-scrollbar are used
- * to scroll without scrollbar (scrollbar is overlapped).
- */
-.hidden-scrollbar {
-  overflow:hidden;
-}
+  /**
+   * Those classes hidden-scrollbar inner-scrollbar are used
+   * to scroll without scrollbar (scrollbar is overlapped).
+   */
+  .hidden-scrollbar {
+    overflow: hidden;
+  }
 
-.inner-scrollbar {
-  overflow-y: scroll;
-  margin:0 -17px 0 15px;
-}
+  .inner-scrollbar {
+    overflow-y: scroll;
+    margin:0 -17px 0 15px;
+  }
 
-.btn .glyphicon {
-   margin-left: 4px;
-}
+  .btn .glyphicon {
+    margin-left: 4px;
+  }
 
-a .glyphicon {
-   margin-left: 4px;
-}
+  a .glyphicon {
+    margin-left: 4px;
+  }
 
-.nav-sidebar-button {
-   margin-left: 15px;
-}
+  .nav-sidebar-button {
+    margin-left: 15px;
+  }
