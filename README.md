@@ -13,8 +13,9 @@ Because the difficulty to get specify queries to each language **news searches a
 - Knockout.
 - jquery.
 - Google map API. (maps, geocode(get place coordinates), places (to autocomplete cities).
-- Bing search API.(to get the news)
-- embedly API. (to get additional news information, like the image from the news link , also a service to get the resized thumbnails instead the original image.)
+- Bing search API.(to get the news).
+- embedly API. (to get additional news information, like the image from the news link , also a service to get the resized thumbnails instead the original image.).
+- ipinfo.io to get the current IP location.
 
 ##  Project structure.
 - **Root.**
