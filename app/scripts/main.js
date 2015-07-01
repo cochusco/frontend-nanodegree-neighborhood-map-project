@@ -183,7 +183,7 @@ function getNews(cityObj, newsOsvArr, NewsClass) {
 
 		var street;
 		var streetKey;
-		for (var i = 0; i < response.d.results.length; i++) {
+		for (var i = 0 , len = response.d.results.length; i < len ; i++) {
 			street = hasStreet(response.d.results[i].Description);
 			if (street) {
 				streetKey = street.replace(' ', '').toLowerCase();
@@ -336,7 +336,7 @@ function localNewsViewModel() {
 		var countryCode;
 		var curLoc = self.currentLocation();
 		var adressComp = curLoc.address_components;
-		for (var i = 0; i < adressComp.length; i++) {
+		for (var i = 0 , len = adressComp.length; i <len; i++) {
 			if (adressComp[i].types.indexOf('country') != -1) countryCode = adressComp[i].short_name;
 		}
 		var cit = new City(curLoc.vicinity, curLoc.formatted_address, countryCode, new Coordinate(curLoc.geometry.location.A, curLoc.geometry.location.F));
@@ -350,7 +350,7 @@ function localNewsViewModel() {
 	 */
 	self.visibleNewsCounter = function() {
 		var count = 0;
-		for (var i = 0; i < self.currentNews().length; i++) {
+		for (var i = 0 , len = self.currentNews().length; i < len; i++) {
 			if (self.currentNews()[i].visible()) count++;
 		}
 		self.visibleNewsCount(count);
@@ -383,14 +383,14 @@ function localNewsViewModel() {
 	};
 
 	self.showAll = function() {
-		for (var i = 0; i < self.currentNews().length; i++) {
+		for (var i = 0 , len = self.currentNews().length; i < len; i++) {
 			self.currentNews()[i].visible(true);
 		}
 
 	};
 
 	self.hideAll = function() {
-		for (var i = 0; i < self.currentNews().length; i++) {
+		for (var i = 0 , len = self.currentNews().length; i < len; i++) {
 			self.currentNews()[i].visible(false);
 		}
 
