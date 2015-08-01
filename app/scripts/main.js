@@ -46,6 +46,20 @@ var BING_NEWS_MARKETS = { //Used to get specific market information for each sup
 	ZA: 'en-ZA'
 };
 var EMBEDLY_RESIZE_IMAGE_SERVICE_URL = 'http://i.embed.ly/1/image/resize?';
+var DEFAUL_CITY_LOCATION = { //reduced google place result for the default initial city
+	vicinity: 'London',
+	formatted_address: 'London, GB',
+	address_components: [{
+		'short_name': 'GB',
+		'types': ['country']
+	}],
+	geometry: {
+		'location': {
+			lat: function(){return 51.5073509;},
+			lng: function(){return -0.12775829999998223;}
+		}
+	}
+};
 var getFormatedDate = function(date) {
 	return date.toLocaleDateString('en-US', {
 		weekday: 'long',
@@ -98,7 +112,7 @@ function initialize() {
 	var run = function() {
 		if (Offline.state === 'up')
 			Offline.check();
-	}
+	};
 	setInterval(run, 5000);
 
 }
@@ -284,13 +298,18 @@ function getUrlExtraData(imgSUrl, srcUrlOsvb) {
 
 
 /**
- * Get current location according  browser IP
- * and fills observableLocation with a reduced place result object. https://developers.google.com/maps/documentation/javascript/reference#PlaceResult
+ * Get current city according browser IP and fills observableLocation
+ * with a reduced place result object for this city. https://developers.google.com/maps/documentation/javascript/reference#PlaceResult
+ * if it doesn't exist it uses the default city.
  * I use this object because compatibility with google services. (Autocomplete , geocoding..)
  * @param {observableLocation} observable object where the location will be inserted.
  */
-function getCurrentLocation(observableLocation) {
+function getInitialCity(observableLocation) {
 	$.get('http://ipinfo.io', function(response) {
+		if(!response.city || response.city=='null'){ // if there is no city return default city
+			observableLocation(DEFAUL_CITY_LOCATION);
+			return;
+		}
 		var locat = response.loc.split(',');
 		var location = {
 			vicinity: response.city,
@@ -301,15 +320,14 @@ function getCurrentLocation(observableLocation) {
 			}],
 			geometry: {
 				'location': {
-					lat: function(){return locat[0]},
-					lng: function(){return locat[1]}
+					lat: function(){return locat[0];},
+					lng: function(){return locat[1];}
 				}
 			}
 		};
 		observableLocation(location);
 	}, 'jsonp');
 }
-
 
 
 /**
@@ -366,8 +384,8 @@ function localNewsViewModel() {
 		this.visible.subscribe(this.visibleNewsCounter); // visibleNewsCounter will be triggered when visible member changes.
 	};
 	self.ExtdNew.prototype.visibleNewsCounter = self.visibleNewsCounter;
-	// Starts news collection process by getting current location by IP.
-	getCurrentLocation(self.currentLocation);
+	// Starts news collection process by getting current city by IP.
+	getInitialCity(self.currentLocation);
 
 
 
@@ -497,7 +515,6 @@ ko.bindingHandlers.mapMarker = {
 			// I need that in case of element removal. (IE a news element is deleted from the news array).
 			ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
 				var modelObj = ko.dataFor(element);
-				console.log('deletd' + modelObj);
 				modelObj._mapMarker.setMap(null);
 			});
 			// When the news component change (IE asynchronous API callback for some information. ) marker info windows is regenerated.
