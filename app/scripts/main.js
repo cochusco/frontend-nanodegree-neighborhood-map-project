@@ -301,8 +301,8 @@ function getCurrentLocation(observableLocation) {
 			}],
 			geometry: {
 				'location': {
-					'A': locat[0],
-					'F': locat[1]
+					lat: function(){return locat[0]},
+					lng: function(){return locat[1]}
 				}
 			}
 		};
@@ -337,7 +337,7 @@ function localNewsViewModel() {
 		for (var i = 0, len = adressComp.length; i < len; i++) {
 			if (adressComp[i].types.indexOf('country') != -1) countryCode = adressComp[i].short_name;
 		}
-		var cit = new City(curLoc.vicinity, curLoc.formatted_address, countryCode, new Coordinate(curLoc.geometry.location.A, curLoc.geometry.location.F));
+		var cit = new City(curLoc.vicinity, curLoc.formatted_address, countryCode, new Coordinate(curLoc.geometry.location.lat(), curLoc.geometry.location.lng()));
 		self.currentNews.removeAll();
 		getNews(cit, self.currentNews, self.ExtdNew);
 		return cit;
